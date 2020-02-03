@@ -1,7 +1,6 @@
-const $home =    document.getElementById('home')
-const $about =   document.getElementById('about')
-const $contact = document.getElementById('contact')
-const $main =    document.querySelector('.main')
+const $routes = document.querySelectorAll('.router a')
+const $main =   document.querySelector('.main')
+
 const page = {
 	home: '<h2>Home</h2>',
 	about: '<h2>About</h2>',
@@ -14,20 +13,14 @@ const gotoPage = (name) => {
 	$main.innerHTML = page[name]
 }
 
-$home.addEventListener('click', event => {
-	gotoPage('home')
-})
-
-$about.addEventListener('click', event => {
-	gotoPage('about')
-})
-
-$contact.addEventListener('click', event => {
-	gotoPage('contact')
-})
-
-
 window.addEventListener('load', event => {
 	gotoPage(window.location.hash.slice(1))
+
+	$routes.forEach($link => {
+		$link.addEventListener('click', event => {
+			gotoPage($link.getAttribute('href').slice(1))
+		})
+	})
+
 })
 

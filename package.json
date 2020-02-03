@@ -1,0 +1,25 @@
+{
+  "name": "spa-framework",
+  "version": "1.0.0",
+  "description": "Single page app framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wddm-f19/spa-framework.git"
+  },
+  "keywords": [
+    "router"
+  ],
+  "author": "RP",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wddm-f19/spa-framework/issues"
+  },
+  "homepage": "https://github.com/wddm-f19/spa-framework#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

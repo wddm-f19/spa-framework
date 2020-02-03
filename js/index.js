@@ -1,16 +1,44 @@
 const $routes = document.querySelectorAll('.router a')
 const $main =   document.querySelector('.main')
 
-const page = {
-	home: '<h2>Home</h2>',
-	about: '<h2>About</h2>',
-	contact: '<h2>Contact</h2>'
+class HomePage {
+	constructor() {
+		this.html = '<h2>Home</h2>'
+	}
+	getHTML() {
+		return this.html
+	}
 }
+
+class AboutPage {
+	constructor() {
+		this.html = '<h2>About</h2>'
+	}
+	getHTML() {
+		return this.html
+	}
+}
+
+class ContactPage {
+	constructor() {
+		this.html = '<h2>Contact</h2>'
+	}
+	getHTML() {
+		return this.html
+	}
+}
+
+const page = {
+	home: new HomePage(),
+	about: new AboutPage(),
+	contact: new ContactPage()
+}
+
 
 const gotoPage = (name) => {
 	if (!page[name])
 		name = 'home'  // Actually, do a "404"
-	$main.innerHTML = page[name]
+	$main.innerHTML = page[name].getHTML();
 }
 
 window.addEventListener('load', event => {

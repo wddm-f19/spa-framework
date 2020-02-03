@@ -1,39 +1,15 @@
+import HomePage from '/js/pages/home.js'
+import AboutPage from '/js/pages/about.js'
+import ContactPage from '/js/pages/contact.js'
+
 const $routes = document.querySelectorAll('.router a')
 const $main =   document.querySelector('.main')
-
-class HomePage {
-	constructor() {
-		this.html = '<h2>Home</h2>'
-	}
-	getHTML() {
-		return this.html
-	}
-}
-
-class AboutPage {
-	constructor() {
-		this.html = '<h2>About</h2>'
-	}
-	getHTML() {
-		return this.html
-	}
-}
-
-class ContactPage {
-	constructor() {
-		this.html = '<h2>Contact</h2>'
-	}
-	getHTML() {
-		return this.html
-	}
-}
 
 const page = {
 	home: new HomePage(),
 	about: new AboutPage(),
 	contact: new ContactPage()
 }
-
 
 const gotoPage = (name) => {
 	if (!page[name])
@@ -51,4 +27,3 @@ window.addEventListener('load', event => {
 	})
 
 })
-

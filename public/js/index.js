@@ -18,11 +18,11 @@ const gotoPage = (name) => {
 }
 
 window.addEventListener('load', event => {
-	gotoPage(window.location.hash.slice(1))
+	gotoPage(window.location.pathname.slice(1).split('/')[0])
 
 	$routes.forEach($link => {
 		$link.addEventListener('click', event => {
-			gotoPage($link.getAttribute('href').slice(1))
+			gotoPage($link.getAttribute('href').slice(1).split('/')[0])
 		})
 	})
 

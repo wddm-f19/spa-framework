@@ -1,0 +1,19 @@
+body {
+	background-color: #ddd;
+	font: 1em helvetica, sans-serif;
+}
+
+.header {
+	background-color: rgb(182, 182, 178);
+	padding: 1em 1em;
+}
+
+.main {
+	padding: 0 1em;
+}
+
+.footer {
+	background-color: grey;
+	color: white;
+	padding: 1em;
+}

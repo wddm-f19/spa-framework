@@ -1,39 +1,52 @@
-import HomePage from '/js/pages/home.js'
-import AboutPage from '/js/pages/about.js'
-import ContactPage from '/js/pages/contact.js'
+import Home from '/js/pages/home.js'
+import About from '/js/pages/about.js'
+import Contact from '/js/pages/contact.js'
 
+// Store a few references
 const $routes = document.querySelectorAll('.router a')
 const $main =   document.querySelector('.main')
 
-
-const page = {
-	home: new HomePage(),
-	about: new AboutPage(),
-	contact: new ContactPage()
+// Create our page routes
+const routes = {
+	home: new Home(),
+	about: new About(),
+	contact: new Contact()
 }
 
+// Load new page content
 const gotoPage = (name) => {
-	if (!page[name]) {
+	if (!routes[name]) {
 		name = 'home'  // Actually, do a "404"
 	}
-	$main.innerHTML = page[name].getHTML()
+	$main.innerHTML = routes[name].getHTML() // Put the HTML in the container
 }
 
+// If someone uses the browser back/forward functionality, redirect
+window.addEventListener('popstate', event => {
+	const route = event.state.path
+	gotoPage(route);
+})
+
+// When the page loads...
 window.addEventListener('load', event => {
+
+	// Get the page url and load the Page based on the pathname
 	const route = window.location.pathname.slice(1).split('/')[0]
 	gotoPage(route)
 
+	// For all `.router a`...
 	$routes.forEach($link => {
+		// When an anchor is clicked
 		$link.addEventListener('click', event => {
-			event.preventDefault()
+
+			event.preventDefault() // Stop the browser from redirecting
+
+			// Go to the page specified in the href
 			const route = $link.getAttribute('href').slice(1).split('/')[0]
-			window.history.pushState({page:`${route}`}, '', `/${route}`)
 			gotoPage(route)
+
+			// Add browser history so we can go back/forward
+			window.history.pushState({path:`${route}`}, '', `/${route}`)
 		})
 	})
-})
-
-window.addEventListener('popstate', event => {
-	const route = event.state.page
-	gotoPage(route);
 })

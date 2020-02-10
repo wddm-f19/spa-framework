@@ -13,30 +13,27 @@ const page = {
 }
 
 const gotoPage = (name) => {
-	if (!page[name])
+	if (!page[name]) {
 		name = 'home'  // Actually, do a "404"
-
-	window.history.pushState({}, '', `/${name}`)
+	}
 	$main.innerHTML = page[name].getHTML()
 }
 
 window.addEventListener('load', event => {
-	gotoPage(window.location.pathname.slice(1).split('/')[0])
-
-	const rand = Math.random()*10
-	console.log(rand);
+	const route = window.location.pathname.slice(1).split('/')[0]
+	gotoPage(route)
 
 	$routes.forEach($link => {
 		$link.addEventListener('click', event => {
 			event.preventDefault()
-			gotoPage($link.getAttribute('href').slice(1).split('/')[0])
+			const route = $link.getAttribute('href').slice(1).split('/')[0]
+			window.history.pushState({page:`${route}`}, '', `/${route}`)
+			gotoPage(route)
 		})
 	})
-
 })
 
 window.addEventListener('popstate', event => {
-	
-	console.log(event);
-	
+	const route = event.state.page
+	gotoPage(route);
 })

@@ -33,7 +33,12 @@ window.addEventListener('load', event => {
 
 	// Get the page url and load the Page based on the pathname
 	const route = window.location.pathname.slice(1).split('/')[0]
-	gotoPage(route)
+
+	if (route == '') {
+		gotoPage('home')
+	} else {
+		gotoPage(route)
+	}
 
 	// For all `.router a`...
 	$routes.forEach($link => {

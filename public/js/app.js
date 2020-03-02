@@ -3,7 +3,7 @@ import About from '/js/pages/about.js'
 import Contact from '/js/pages/contact.js'
 
 // Store a few references
-const $routes = document.querySelectorAll('.router a')
+// const $routes = document.querySelectorAll('.router a')
 const $main =   document.querySelector('.main')
 
 // Create our page routes
@@ -14,12 +14,16 @@ const routes = {
 }
 
 // Load new page content
-const gotoPage = (name) => {
+const gotoPage = (name, subs=null) => {
 	if (!routes[name]) {
 		name = 'home'  // Actually, do a "404"
 	}
 	// $main.innerHTML = routes[name].getHTML() 
 	routes[name].render($main) // Put the HTML in the container, AND setup events
+
+	if (subs) {
+		routes[name].subrequests(subs)
+	}
 }
 
 // If someone uses the browser back/forward functionality, redirect
@@ -32,27 +36,38 @@ window.addEventListener('popstate', event => {
 window.addEventListener('load', event => {
 
 	// Get the page url and load the Page based on the pathname
-	const route = window.location.pathname.slice(1).split('/')[0]
+	const path = window.location.pathname.replace(/^\/+/g, '').split('/')
+	const route = path[0]
+	const subrequests = path.slice(1)
+
 
 	if (route == '') {
-		gotoPage('home')
+		gotoPage('home', subrequests)
 	} else {
-		gotoPage(route)
+		gotoPage(route, subrequests)
 	}
 
-	// For all `.router a`...
-	$routes.forEach($link => {
-		// When an anchor is clicked
-		$link.addEventListener('click', event => {
+	
+	// When anything is clicked
+	window.addEventListener('click', event => {
+
+		// For all `.router a`...
+		if (event.target.matches('.router a')) {
+
+			const $link = event.target;
 
 			event.preventDefault() // Stop the browser from redirecting
 
 			// Go to the page specified in the href
-			const route = $link.getAttribute('href').slice(1).split('/')[0]
-			gotoPage(route)
+			const path = $link.getAttribute('href').replace(/^\/+/g, '').split('/')
+			const route = path[0]
+			const subrequests = path.slice(1)
+			
+			gotoPage(route, subrequests)
 
 			// Add browser history so we can go back/forward
-			window.history.pushState({path:`${route}`}, '', `/${route}`)
-		})
+			window.history.pushState({path:`/${route}/${subrequests.join('/')}`}, '', `/${route}/${subrequests.join('/')}`)
+		}
 	})
+
 })

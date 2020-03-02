@@ -18,7 +18,8 @@ const gotoPage = (name) => {
 	if (!routes[name]) {
 		name = 'home'  // Actually, do a "404"
 	}
-	$main.innerHTML = routes[name].getHTML() // Put the HTML in the container
+	// $main.innerHTML = routes[name].getHTML() 
+	routes[name].render($main) // Put the HTML in the container, AND setup events
 }
 
 // If someone uses the browser back/forward functionality, redirect
